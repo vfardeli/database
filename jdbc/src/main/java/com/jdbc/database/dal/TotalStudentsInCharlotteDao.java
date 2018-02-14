@@ -1,39 +1,16 @@
 package com.jdbc.database.dal;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class TotalStudentsInCharlotteDao {
-  private ConnectionManager privateConnectionManager;
-  private ConnectionManager publicConnectionManager;
 
   // Singleton pattern
   private static TotalStudentsInCharlotteDao instance = null;
 
   /**
    * Default Constructor.
-   * Get setup the connection configurations for both public database
-   * and private database.
-   *
-   * @throws SQLException when connection has something wrong.
    */
-  private TotalStudentsInCharlotteDao() throws SQLException {
-    privateConnectionManager = new ConnectionManager(
-            "root",
-            "password",
-            "localhost",
-            3306,
-            "AlignPrivate");
-
-    publicConnectionManager = new ConnectionManager(
-            "root",
-            "password",
-            "localhost",
-            3306,
-            "AlignPublic");
-  }
+  private TotalStudentsInCharlotteDao() { }
 
   /**
    * Singleton Pattern.
@@ -61,33 +38,10 @@ public class TotalStudentsInCharlotteDao {
             "SELECT COUNT(*) AS TOTAL_CHARLOTTE_STUDENTS " +
                     "FROM Students " +
                     "WHERE Campus = \"CHARLOTTE\";";
-    Connection privateConnection = null;
-    PreparedStatement selectStatement = null;
-    ResultSet results = null;
-    try {
-      privateConnectionManager.connect();
-      privateConnection = privateConnectionManager.getConnection();
-      selectStatement = privateConnection.prepareStatement(getTotalStudentsFromPrivateDatabase);
-      results = selectStatement.executeQuery();
-      if (results.next()) {
-        int totalStudentsInCharlotte = results.getInt("TOTAL_CHARLOTTE_STUDENTS");
-        return totalStudentsInCharlotte;
-      }
-    } catch (SQLException exception) {
-      exception.printStackTrace();
-      throw exception;
-    } finally {
-      if (privateConnection != null) {
-        privateConnection.close();
-      }
-      if (selectStatement != null) {
-        selectStatement.close();
-      }
-      if (results != null) {
-        results.close();
-      }
-    }
-    return -1;
+    PrivateDatabaseEtlQuery privateDatabaseEtlQuery = new PrivateDatabaseEtlQuery();
+    return privateDatabaseEtlQuery.getSingleValueQuery(
+            getTotalStudentsFromPrivateDatabase,
+            "TOTAL_CHARLOTTE_STUDENTS");
   }
 
   /**
@@ -101,26 +55,24 @@ public class TotalStudentsInCharlotteDao {
    */
   public void updateTotalStudentsInCharlotteInPublicDatabase(int totalStudents) throws SQLException {
     String updateTotalStudentsInCharlotteInPublic =
-            "UPDATE TotalStudentsInCharlotte SET TotalStudents = ? WHERE TotalStudentsInCharlotteId = 1;";
-    Connection publicConnection = null;
-    PreparedStatement updateStatement = null;
-    try {
-      publicConnectionManager.connect();
-      publicConnection = publicConnectionManager.getConnection();
-      updateStatement = publicConnection.prepareStatement(updateTotalStudentsInCharlotteInPublic);
-      updateStatement.setInt(1, totalStudents);
-      updateStatement.executeQuery();
-    } catch (SQLException exception) {
-      exception.printStackTrace();
-      throw exception;
-    } finally {
-      if (publicConnection != null) {
-        publicConnection.close();
-      }
-      if (updateStatement != null) {
-        updateStatement.close();
-      }
-    }
+            "UPDATE SingleValueAggregatedData SET DataValue = ? WHERE DataKey = \"TotalStudentsInCharlotte\";";
+    PublicDatabaseEtlQuery publicPublicDatabaseEtlQuery = new PublicDatabaseEtlQuery();
+    publicPublicDatabaseEtlQuery.updateSingleValueQuery(updateTotalStudentsInCharlotteInPublic, totalStudents);
+  }
 
+  /**
+   * Get total students in Charlotte from the public database.
+   * This is a script that gets the information for total students
+   * in Charlotte from the public database.
+   *
+   * @return Total Students In Charlotte (From public database)
+   * @throws SQLException when connection to the DB has something wrong.
+   */
+  public int getTotalStudentsInCharlotteFromPublicDatabase() throws SQLException {
+    String getTotalStudentsInCharlotteFromPublicDatabase =
+            "SELECT DataValue FROM SingleValueAggregatedData WHERE DataKey = \"TotalStudentsInCharlotte\";";
+    PublicDatabaseEtlQuery publicPublicDatabaseEtlQuery = new PublicDatabaseEtlQuery();
+    return publicPublicDatabaseEtlQuery.getSingleValueQuery(
+            getTotalStudentsInCharlotteFromPublicDatabase);
   }
 }

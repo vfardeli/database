@@ -4,9 +4,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,46 +13,6 @@ public class TopFiveEmployersDaoTest {
   private List<String> topFiveEmployersFromPlaceholder;
   private TopFiveEmployersDao topFiveEmployersDao;
 
-  private List<String> getTopFiveEmployersFromPublicDatabase() throws SQLException {
-    Connection publicConnection = null;
-    ConnectionManager publicConnectionManager = new ConnectionManager(
-            "root",
-            "password",
-            "localhost",
-            3306,
-            "AlignPublic");
-
-    String getTopFiveEmployersFromPublicDatabase =
-            "SELECT Employer FROM TopFiveEmployers;";
-    PreparedStatement selectStatement = null;
-    ResultSet results = null;
-    List<String> topFiveEmployers = new ArrayList<>();
-    try {
-      publicConnectionManager.connect();
-      publicConnection = publicConnectionManager.getConnection();
-      selectStatement = publicConnection.prepareStatement(getTopFiveEmployersFromPublicDatabase);
-      results = selectStatement.executeQuery();
-      while (results.next()) {
-        String topEmployers = results.getString("Employer");
-        topFiveEmployers.add(topEmployers);
-      }
-    } catch (SQLException exception) {
-      exception.printStackTrace();
-      throw exception;
-    } finally {
-      if (publicConnection != null) {
-        publicConnection.close();
-      }
-      if (selectStatement != null) {
-        selectStatement.close();
-      }
-      if (results != null) {
-        results.close();
-      }
-    }
-    return topFiveEmployers;
-  }
-
   @Before
   public void init() throws SQLException {
     topFiveEmployersDao = TopFiveEmployersDao.getInstance();
@@ -63,9 +20,6 @@ public class TopFiveEmployersDaoTest {
     topFiveEmployersTest = new ArrayList<>();
     topFiveEmployersTest.add("Alibaba");
     topFiveEmployersTest.add("Samsung");
-    topFiveEmployersTest.add(null);
-    topFiveEmployersTest.add(null);
-    topFiveEmployersTest.add(null);
 
     topFiveEmployersFromPlaceholder = new ArrayList<>();
     topFiveEmployersFromPlaceholder.add("Google");
@@ -91,11 +45,14 @@ public class TopFiveEmployersDaoTest {
   public void updateTopFiveEmployersInPublicDatabaseTest() throws SQLException {
     topFiveEmployersDao.updateTopFiveEmployersInPublicDatabase(
             topFiveEmployersTest);
-    Assert.assertTrue(getTopFiveEmployersFromPublicDatabase()
+    topFiveEmployersTest.add("NULL");
+    topFiveEmployersTest.add("NULL");
+    topFiveEmployersTest.add("NULL");
+    Assert.assertTrue(topFiveEmployersDao.getTopFiveEmployersFromPublicDatabase()
             .equals(topFiveEmployersTest));
     topFiveEmployersDao.updateTopFiveEmployersInPublicDatabase(
             topFiveEmployersFromPlaceholder);
-    Assert.assertTrue(getTopFiveEmployersFromPublicDatabase()
+    Assert.assertTrue(topFiveEmployersDao.getTopFiveEmployersFromPublicDatabase()
             .equals(topFiveEmployersFromPlaceholder));
   }
 }

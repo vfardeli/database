@@ -1,44 +1,19 @@
 package com.jdbc.database.dal;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import com.jdbc.database.Constants;
+
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class TopFiveEmployersDao {
-  private static final int TOP_FIVE = 5;
-  private static final String NULL = "NULL";
-
-  private ConnectionManager privateConnectionManager;
-  private ConnectionManager publicConnectionManager;
 
   // Singleton pattern
   private static TopFiveEmployersDao instance = null;
 
   /**
    * Default Constructor.
-   * Get setup the connection configurations for both public database
-   * and private database.
-   *
-   * @throws SQLException when connection has something wrong.
    */
-  private TopFiveEmployersDao() throws SQLException {
-    privateConnectionManager = new ConnectionManager(
-            "root",
-            "password",
-            "localhost",
-            3306,
-            "AlignPrivate");
-
-    publicConnectionManager = new ConnectionManager(
-            "root",
-            "password",
-            "localhost",
-            3306,
-            "AlignPublic");
-  }
+  private TopFiveEmployersDao() { }
 
   /**
    * Singleton Pattern.
@@ -68,34 +43,9 @@ public class TopFiveEmployersDao {
                     "GROUP BY EMPLOYER " +
                     "ORDER BY TOTAL DESC " +
                     "LIMIT 5;";
-    List<String> topFiveEmployers = new ArrayList<>();
-    Connection privateConnection = null;
-    PreparedStatement selectStatement = null;
-    ResultSet results = null;
-    try {
-      privateConnectionManager.connect();
-      privateConnection = privateConnectionManager.getConnection();
-      selectStatement = privateConnection.prepareStatement(getTopFiveEmployersFromPrivateDatabase);
-      results = selectStatement.executeQuery();
-      while (results.next()) {
-        String topEmployers = results.getString("EMPLOYER");
-        topFiveEmployers.add(topEmployers);
-      }
-    } catch (SQLException exception) {
-      exception.printStackTrace();
-      throw exception;
-    } finally {
-      if (privateConnection != null) {
-        privateConnection.close();
-      }
-      if (selectStatement != null) {
-        selectStatement.close();
-      }
-      if (results != null) {
-        results.close();
-      }
-    }
-    return topFiveEmployers;
+    PrivateDatabaseEtlQuery privateDatabaseEtlQuery = new PrivateDatabaseEtlQuery();
+    return privateDatabaseEtlQuery.getMultipleValueQuery(
+            getTopFiveEmployersFromPrivateDatabase, "EMPLOYER");
   }
 
   /**
@@ -110,37 +60,24 @@ public class TopFiveEmployersDao {
   public void updateTopFiveEmployersInPublicDatabase(List<String> topFiveEmployers) throws SQLException {
     String updateTopFiveEmployersInPublic =
             "UPDATE TopFiveEmployers SET Employer = ? WHERE TopFiveEmployersId = ?;";
-    Connection publicConnection = null;
-    PreparedStatement updateStatement = null;
-    int listSize = topFiveEmployers.size();
-    try {
-      publicConnectionManager.connect();
-      publicConnection = publicConnectionManager.getConnection();
-      for (int index = 0; index < listSize; index++) {
-        updateStatement = publicConnection.prepareStatement(updateTopFiveEmployersInPublic);
-        updateStatement.setString(1, topFiveEmployers.get(index));
-        updateStatement.setInt(2, index + 1);
-        updateStatement.executeQuery();
-      }
-      if (listSize < TOP_FIVE) {
-        for (int index = listSize; index < TOP_FIVE; index++) {
-          updateStatement = publicConnection.prepareStatement(updateTopFiveEmployersInPublic);
-          updateStatement.setString(1, NULL);
-          updateStatement.setInt(2, index + 1);
-          updateStatement.executeQuery();
-        }
-      }
-    } catch (SQLException exception) {
-      exception.printStackTrace();
-      throw exception;
-    } finally {
-      if (publicConnection != null) {
-        publicConnection.close();
-      }
-      if (updateStatement != null) {
-        updateStatement.close();
-      }
-    }
+    PublicDatabaseEtlQuery publicPublicDatabaseEtlQuery = new PublicDatabaseEtlQuery();
+    publicPublicDatabaseEtlQuery.updateMultipleValueQuery(
+            updateTopFiveEmployersInPublic, topFiveEmployers, Constants.TOP_FIVE);
+  }
 
+  /**
+   * Get the top five employers from the private database.
+   * This is a script that gets the information for top five
+   * employers from the private database.
+   *
+   * @return Top five employers (from public database).
+   * @throws SQLException when connection to database has something wrong.
+   */
+  public List<String> getTopFiveEmployersFromPublicDatabase() throws SQLException {
+    String getTopFiveEmployersFromPublicDatabase =
+            "SELECT Employer FROM TopFiveEmployers;";
+    PublicDatabaseEtlQuery publicPublicDatabaseEtlQuery = new PublicDatabaseEtlQuery();
+    return publicPublicDatabaseEtlQuery.getMultipleValueQuery(
+            getTopFiveEmployersFromPublicDatabase, "Employer", Constants.TOP_FIVE);
   }
 }

@@ -1,39 +1,16 @@
 package com.jdbc.database.dal;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class TotalStudentsInSiliconValleyDao {
-  private ConnectionManager privateConnectionManager;
-  private ConnectionManager publicConnectionManager;
 
   // Singleton pattern
   private static TotalStudentsInSiliconValleyDao instance = null;
 
   /**
    * Default Constructor.
-   * Get setup the connection configurations for both public database
-   * and private database.
-   *
-   * @throws SQLException when connection has something wrong.
    */
-  private TotalStudentsInSiliconValleyDao() throws SQLException {
-    privateConnectionManager = new ConnectionManager(
-            "root",
-            "password",
-            "localhost",
-            3306,
-            "AlignPrivate");
-
-    publicConnectionManager = new ConnectionManager(
-            "root",
-            "password",
-            "localhost",
-            3306,
-            "AlignPublic");
-  }
+  private TotalStudentsInSiliconValleyDao() { }
 
   /**
    * Singleton Pattern.
@@ -61,33 +38,10 @@ public class TotalStudentsInSiliconValleyDao {
             "SELECT COUNT(*) AS TOTAL_SILICON_VALLEY_STUDENTS " +
                     "FROM Students " +
                     "WHERE Campus = \"SILICON_VALLEY\";";
-    Connection privateConnection = null;
-    PreparedStatement selectStatement = null;
-    ResultSet results = null;
-    try {
-      privateConnectionManager.connect();
-      privateConnection = privateConnectionManager.getConnection();
-      selectStatement = privateConnection.prepareStatement(getTotalStudentsFromPrivateDatabase);
-      results = selectStatement.executeQuery();
-      if (results.next()) {
-        int totalStudentsInSiliconValley = results.getInt("TOTAL_SILICON_VALLEY_STUDENTS");
-        return totalStudentsInSiliconValley;
-      }
-    } catch (SQLException exception) {
-      exception.printStackTrace();
-      throw exception;
-    } finally {
-      if (privateConnection != null) {
-        privateConnection.close();
-      }
-      if (selectStatement != null) {
-        selectStatement.close();
-      }
-      if (results != null) {
-        results.close();
-      }
-    }
-    return -1;
+    PrivateDatabaseEtlQuery privateDatabaseEtlQuery = new PrivateDatabaseEtlQuery();
+    return privateDatabaseEtlQuery.getSingleValueQuery(
+            getTotalStudentsFromPrivateDatabase,
+            "TOTAL_SILICON_VALLEY_STUDENTS");
   }
 
   /**
@@ -101,26 +55,24 @@ public class TotalStudentsInSiliconValleyDao {
    */
   public void updateTotalStudentsInSiliconValleyInPublicDatabase(int totalStudents) throws SQLException {
     String updateTotalStudentsInSiliconValleyInPublic =
-            "UPDATE TotalStudentsInSiliconValley SET TotalStudents = ? WHERE TotalStudentsInSiliconValleyId = 1;";
-    Connection publicConnection = null;
-    PreparedStatement updateStatement = null;
-    try {
-      publicConnectionManager.connect();
-      publicConnection = publicConnectionManager.getConnection();
-      updateStatement = publicConnection.prepareStatement(updateTotalStudentsInSiliconValleyInPublic);
-      updateStatement.setInt(1, totalStudents);
-      updateStatement.executeQuery();
-    } catch (SQLException exception) {
-      exception.printStackTrace();
-      throw exception;
-    } finally {
-      if (publicConnection != null) {
-        publicConnection.close();
-      }
-      if (updateStatement != null) {
-        updateStatement.close();
-      }
-    }
+            "UPDATE SingleValueAggregatedData SET DataValue = ? WHERE DataKey = \"TotalStudentsInSiliconValley\";";
+    PublicDatabaseEtlQuery publicPublicDatabaseEtlQuery = new PublicDatabaseEtlQuery();
+    publicPublicDatabaseEtlQuery.updateSingleValueQuery(updateTotalStudentsInSiliconValleyInPublic, totalStudents);
+  }
 
+  /**
+   * Get total students in Silicon Valley from the public database.
+   * This is a script that gets the information for total students
+   * in Silicon Valley from the public database.
+   *
+   * @return Total Students In Silicon Valley (From public database).
+   * @throws SQLException when connection to the DB has something wrong.
+   */
+  public int getTotalStudentsInSiliconValleyFromPublicDatabase() throws SQLException {
+    String getTotalStudentsInSiliconValleyFromPublicDatabase =
+            "SELECT DataValue FROM SingleValueAggregatedData WHERE DataKey = \"TotalStudentsInSiliconValley\";";
+    PublicDatabaseEtlQuery publicPublicDatabaseEtlQuery = new PublicDatabaseEtlQuery();
+    return publicPublicDatabaseEtlQuery.getSingleValueQuery(
+            getTotalStudentsInSiliconValleyFromPublicDatabase);
   }
 }

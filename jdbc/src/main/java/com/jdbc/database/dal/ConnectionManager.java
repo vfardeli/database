@@ -44,7 +44,7 @@ public class ConnectionManager {
       System.setProperty("javax.net.ssl.trustStoreType", "jks");
       System.setProperty("javax.net.ssl.keyStore", "/Users/valeryfardeli/.ssl/clientcertificate.p12");
       System.setProperty("javax.net.ssl.trustStore", "/Users/valeryfardeli/.ssl/mariadbserver.keystore");
-      System.setProperty("javax.net.ssl.keyStorePassword", "AlienGUIse-93");
+      System.setProperty("javax.net.ssl.keyStorePassword", "password");
 
       String url = "jdbc:mysql://" + host + ":" + port + "/" + database;
       connection = DriverManager.getConnection(url, connectionProperties);

@@ -222,7 +222,7 @@ INSERT INTO Electives (NeuId, CourseId, TermId, Gpa) VALUES (111234547, "CS6140"
 INSERT INTO Electives (NeuId, CourseId, TermId, Gpa) VALUES (211234548, "CS6140", 1, 3.6667);
 INSERT INTO Electives (NeuId, CourseId, TermId, Gpa) VALUES (211234549, "CS6140", 2, 3.6667);
 INSERT INTO Electives (NeuId, CourseId, TermId, Gpa) VALUES (211232248, "CS5610", 3, 3.6667);
-INSERT INTO Electives (NeuId, CourseId, TermId, Gpa) VALUES (211234550, "CS5610", 4, 3.6667);
+INSERT INTO Electives (NeuId, CourseId, TermId, Gpa, Plagiarism) VALUES (211234550, "CS5610", 4, 3.6667, TRUE);
 
 # Insert Experiences Table
 INSERT INTO Experiences (NeuId, Title, Description) VALUES (001234567, "Angular 2 Conference", "Learn how to use angular 2 in web development");

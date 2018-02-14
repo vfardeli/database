@@ -10,7 +10,7 @@ DROP TABLE IF EXISTS TopFiveElectives;
 
 CREATE TABLE SingleValueAggregatedData (
 	DataKey VARCHAR(255),
-    DataValue VARCHAR(500) DEFAULT "NULL",
+    DataValue INT DEFAULT -1,
     CONSTRAINT pk_SingleValueAggregatedData_DataKey
 		PRIMARY KEY (DataKey)
 );

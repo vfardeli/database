@@ -168,6 +168,7 @@ CREATE TABLE Electives (
     TermId INT,
     Retake BOOLEAN DEFAULT FALSE,
 	Gpa FLOAT(6, 4) DEFAULT 0.0000,
+    Plagiarism BOOLEAN DEFAULT FALSE,
     CONSTRAINT pk_Electives_ElectiveId
 		PRIMARY KEY (ElectiveId),
 	CONSTRAINT uq_Electives_Elective

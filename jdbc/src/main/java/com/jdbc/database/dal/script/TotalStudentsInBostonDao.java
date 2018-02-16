@@ -1,4 +1,4 @@
-package com.jdbc.database.dal;
+package com.jdbc.database.dal.script;
 
 import java.sql.SQLException;
 

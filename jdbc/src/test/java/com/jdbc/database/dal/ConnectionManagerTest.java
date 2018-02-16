@@ -44,14 +44,34 @@ public class ConnectionManagerTest {
     }
   }
 
+  /**
+   * Initialize the local variable before each test.
+   */
   @Before
   public void init() {
+    publicConnectionManager = new ConnectionManager(
+            "root",
+            "AlienGUIse-93",
+            "localhost",
+            3306,
+            "AlignPublic");
+  }
+
+  /**
+   * Connect to the database with wrong password.
+   * This test expects to be fail.
+   *
+   * @throws SQLException when something is wrong with DB Connection.
+   */
+  @Test(expected = SQLException.class)
+  public void connectWithWrongPassword() throws SQLException {
     publicConnectionManager = new ConnectionManager(
             "root",
             "password",
             "localhost",
             3306,
-            "align_public");
+            "AlignPublic");
+    publicConnectionManager.connect();
   }
 
   /**
@@ -86,6 +106,8 @@ public class ConnectionManagerTest {
     Assert.assertTrue(publicConnectionManager.getConnection() == null);
     publicConnectionManager.connect();
     Assert.assertTrue(publicConnectionManager.getConnection() != null);
+    publicConnectionManager.closeConnection();
+    Assert.assertTrue(publicConnectionManager.getConnection() == null);
     publicConnectionManager.closeConnection();
     Assert.assertTrue(publicConnectionManager.getConnection() == null);
   }

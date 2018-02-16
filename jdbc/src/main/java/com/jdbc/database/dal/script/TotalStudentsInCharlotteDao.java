@@ -1,4 +1,4 @@
-package com.jdbc.database.dal;
+package com.jdbc.database.dal.script;
 
 import java.sql.SQLException;
 
@@ -10,7 +10,7 @@ public class TotalStudentsInCharlotteDao {
   /**
    * Default Constructor.
    */
-  private TotalStudentsInCharlotteDao() { }
+  public TotalStudentsInCharlotteDao() { }
 
   /**
    * Singleton Pattern.

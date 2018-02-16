@@ -1,5 +1,6 @@
-package com.jdbc.database.dal;
+package com.jdbc.database.dal.script;
 
+import com.jdbc.database.dal.script.TopFiveElectivesDao;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

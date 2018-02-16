@@ -1,4 +1,4 @@
-package com.jdbc.database.dal;
+package com.jdbc.database.dal.script;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -8,6 +8,7 @@ import java.sql.SQLException;
 
 public class TotalStudentsInBostonDaoTest {
   public static final int TOTAL_STUDENTS_IN_BOSTON_TEST = 36;
+  public static final int TOTAL_STUDENTS_IN_BOSTON_TEST_EMPTY = -1;
   public static final int TOTAL_STUDENTS_IN_BOSTON_FROM_PLACEHOLDER = 1;
 
   TotalStudentsInBostonDao totalStudentsInBostonDao;
@@ -30,9 +31,12 @@ public class TotalStudentsInBostonDaoTest {
     Assert.assertTrue(totalStudentsInBostonDao.getTotalStudentsInBostonFromPublicDatabase()
             == TOTAL_STUDENTS_IN_BOSTON_TEST);
     totalStudentsInBostonDao.updateTotalStudentsInBostonInPublicDatabase(
+            TOTAL_STUDENTS_IN_BOSTON_TEST_EMPTY);
+    Assert.assertTrue(totalStudentsInBostonDao.getTotalStudentsInBostonFromPublicDatabase() ==
+            TOTAL_STUDENTS_IN_BOSTON_TEST_EMPTY);
+    totalStudentsInBostonDao.updateTotalStudentsInBostonInPublicDatabase(
             TOTAL_STUDENTS_IN_BOSTON_FROM_PLACEHOLDER);
     Assert.assertTrue(totalStudentsInBostonDao.getTotalStudentsInBostonFromPublicDatabase() ==
             TOTAL_STUDENTS_IN_BOSTON_FROM_PLACEHOLDER);
   }
-
 }

@@ -71,11 +71,8 @@ public class ConnectionManager {
    *                      closing the connection.
    */
   public void closeConnection() throws SQLException {
-    try {
+    if (this.connection != null) {
       connection.close();
-    } catch (SQLException exception) {
-      exception.printStackTrace();
-      throw exception;
     }
     connection = null;
   }

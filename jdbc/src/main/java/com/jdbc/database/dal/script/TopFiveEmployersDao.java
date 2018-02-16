@@ -1,4 +1,4 @@
-package com.jdbc.database.dal;
+package com.jdbc.database.dal.script;
 
 import com.jdbc.database.Constants;
 
@@ -78,6 +78,6 @@ public class TopFiveEmployersDao {
             "SELECT Employer FROM TopFiveEmployers;";
     PublicDatabaseEtlQuery publicPublicDatabaseEtlQuery = new PublicDatabaseEtlQuery();
     return publicPublicDatabaseEtlQuery.getMultipleValueQuery(
-            getTopFiveEmployersFromPublicDatabase, "Employer", Constants.TOP_FIVE);
+            getTopFiveEmployersFromPublicDatabase, "Employer");
   }
 }

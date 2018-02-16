@@ -1,4 +1,4 @@
-package com.jdbc.database.dal;
+package com.jdbc.database.dal.script;
 
 import com.jdbc.database.Constants;
 
@@ -79,6 +79,6 @@ public class TopTenBachelorsDegreeDao {
             "SELECT BachelorsDegree FROM TopTenBachelorsDegree;";
     PublicDatabaseEtlQuery publicPublicDatabaseEtlQuery = new PublicDatabaseEtlQuery();
     return publicPublicDatabaseEtlQuery.getMultipleValueQuery(
-            getTopTenBachelorsDegreeFromPublicDatabase, "BachelorsDegree", Constants.TOP_TEN);
+            getTopTenBachelorsDegreeFromPublicDatabase, "BachelorsDegree");
   }
 }

@@ -37,7 +37,7 @@ CREATE TABLE Students (
     EnrollmentStatus ENUM('FULL_TIME', 'PART_TIME', 'GRADUATED', 'INACTIVE', 'DROPPED_OUT') NOT NULL,
     Campus ENUM('BOSTON', 'CHARLOTTE', 'SEATTLE', 'SILICON_VALLEY') NOT NULL,
     DegreeCandidacy ENUM('ASSOCIATE', 'BACHELORS', 'MASTERS', 'PHD') NOT NULL,
-    Photo VARCHAR(1000),
+    Photo BLOB,
     CONSTRAINT pk_Students_NeuId
 		PRIMARY KEY (NeuId),
 	CONSTRAINT uq_Students_Email

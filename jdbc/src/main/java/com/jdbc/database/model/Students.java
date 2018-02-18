@@ -1,161 +1,181 @@
-//package com.jdbc.database.model;
-//
-//public class Students {
-//  private String username;
-//  private String firstName;
-//  private String middleName;
-//  private String lastName;
-//  private Gender gender;
-//  private int age;
-//  private String phone;
-//  private String address;
-//  private String email;
-//  private Campus campus;
-//  private Major major;
-//  private Degree degreeCandidacy;
-//  private boolean enrollmentStatus;
-//  private String photo;
-//
-//  public Students(
-//          String username,
-//          String firstName,
-//          String middleName,
-//          String lastName,
-//          Gender gender,
-//          int age,
-//          String phone,
-//          String address,
-//          String email,
-//          Campus campus,
-//          Major major,
-//          Degree degreeCandidacy,
-//          boolean enrollmentStatus,
-//          String photo) {
-//    this.username = username;
-//    this.firstName = firstName;
-//    this.middleName = middleName;
-//    this.lastName = lastName;
-//    this.gender = gender;
-//    this.age = age;
-//    this.phone = phone;
-//    this.address = address;
-//    this.email = email;
-//    this.campus = campus;
-//    this.major = major;
-//    this.degreeCandidacy = degreeCandidacy;
-//    this.enrollmentStatus = enrollmentStatus;
-//    this.phone = photo;
-//  }
-//
-//  public String getUsername() {
-//    return username;
-//  }
-//
-//  public void setUsername(String username) {
-//    this.username = username;
-//  }
-//
-//  public String getFirstName() {
-//    return firstName;
-//  }
-//
-//  public void setFirstName(String firstName) {
-//    this.firstName = firstName;
-//  }
-//
-//  public String getMiddleName() {
-//    return middleName;
-//  }
-//
-//  public void setMiddleName(String middleName) {
-//    this.middleName = middleName;
-//  }
-//
-//  public String getLastName() {
-//    return lastName;
-//  }
-//
-//  public void setLastName(String lastName) {
-//    this.lastName = lastName;
-//  }
-//
-//  public Gender getGender() {
-//    return gender;
-//  }
-//
-//  public void setGender(Gender gender) {
-//    this.gender = gender;
-//  }
-//
-//  public int getAge() {
-//    return age;
-//  }
-//
-//  public void setAge(int age) {
-//    this.age = age;
-//  }
-//
-//  public String getPhone() {
-//    return phone;
-//  }
-//
-//  public void setPhone(String phone) {
-//    this.phone = phone;
-//  }
-//
-//  public String getAddress() {
-//    return address;
-//  }
-//
-//  public void setAddress(String address) {
-//    this.address = address;
-//  }
-//
-//  public String getEmail() {
-//    return email;
-//  }
-//
-//  public void setEmail(String email) {
-//    this.email = email;
-//  }
-//
-//  public Campus getCampus() {
-//    return campus;
-//  }
-//
-//  public void setCampus(Campus campus) {
-//    this.campus = campus;
-//  }
-//
-//  public Major getMajor() {
-//    return major;
-//  }
-//
-//  public void setMajor(Major major) {
-//    this.major = major;
-//  }
-//
-//  public Degree getDegreeCandidacy() {
-//    return degreeCandidacy;
-//  }
-//
-//  public void setDegreeCandidacy(Degree degreeCandidacy) {
-//    this.degreeCandidacy = degreeCandidacy;
-//  }
-//
-//  public boolean isEnrollmentStatus() {
-//    return enrollmentStatus;
-//  }
-//
-//  public void setEnrollmentStatus(boolean enrollmentStatus) {
-//    this.enrollmentStatus = enrollmentStatus;
-//  }
-//
-//  public String getPhoto() {
-//    return photo;
-//  }
-//
-//  public void setPhoto(String photo) {
-//    this.photo = photo;
-//  }
-//}
+package com.jdbc.database.model;
+
+import java.sql.Blob;
+
+public class Students {
+    private String neuId;
+    private String email;
+    private String firstName;
+    private String middleName;
+    private String lastName;
+    private Gender gender;
+    private boolean scholarship;
+    private boolean f1Visa;
+    private int age;
+    private String phoneNum;
+    private String address;
+    private String state;
+    private String zip;
+    private EnrollmentStatus enrollmentStatus;
+    private Campus campus;
+    private DegreeCandidacy degree;
+    private Blob photo;
+
+    public Students(String neuId, String email, String firstName, String middleName, String lastName, Gender gender,
+                    boolean scholarship, boolean f1Visa, int age, String phoneNum, String address, String state,
+                    String zip, EnrollmentStatus enrollmentStatus, Campus campus, DegreeCandidacy degree, Blob photo) {
+        this.neuId = neuId;
+        this.email = email;
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.scholarship = scholarship;
+        this.f1Visa = f1Visa;
+        this.age = age;
+        this.phoneNum = phoneNum;
+        this.address = address;
+        this.state = state;
+        this.zip = zip;
+        this.enrollmentStatus = enrollmentStatus;
+        this.campus = campus;
+        this.degree = degree;
+        this.photo = photo;
+    }
+
+    public String getNeuId() {
+        return neuId;
+    }
+
+    public void setNeuId(String neuId) {
+        this.neuId = neuId;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public boolean isScholarship() {
+        return scholarship;
+    }
+
+    public void setScholarship(boolean scholarship) {
+        this.scholarship = scholarship;
+    }
+
+    public boolean isF1Visa() {
+        return f1Visa;
+    }
+
+    public void setF1Visa(boolean f1Visa) {
+        this.f1Visa = f1Visa;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getPhoneNum() {
+        return phoneNum;
+    }
+
+    public void setPhoneNum(String phoneNum) {
+        this.phoneNum = phoneNum;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getZip() {
+        return zip;
+    }
+
+    public void setZip(String zip) {
+        this.zip = zip;
+    }
+
+    public EnrollmentStatus getEnrollmentStatus() {
+        return enrollmentStatus;
+    }
+
+    public void setEnrollmentStatus(EnrollmentStatus enrollmentStatus) {
+        this.enrollmentStatus = enrollmentStatus;
+    }
+
+    public Campus getCampus() {
+        return campus;
+    }
+
+    public void setCampus(Campus campus) {
+        this.campus = campus;
+    }
+
+    public DegreeCandidacy getDegree() {
+        return degree;
+    }
+
+    public void setDegree(DegreeCandidacy degree) {
+        this.degree = degree;
+    }
+
+    public Blob getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Blob photo) {
+        this.photo = photo;
+    }
+}

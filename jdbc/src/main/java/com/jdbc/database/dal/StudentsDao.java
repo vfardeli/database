@@ -14,6 +14,11 @@ public class StudentsDao {
     // Singleton pattern
     private static StudentsDao instance = null;
 
+    /**
+     * Singleton Pattern.
+     *
+     * @return Student Dao instance.
+     */
     public static StudentsDao getInstance() {
         if (instance == null) {
             instance = new StudentsDao();
@@ -22,6 +27,9 @@ public class StudentsDao {
         return instance;
     }
 
+    /**
+     * Default Constructor.
+     */
     private StudentsDao() {
         connectionManager = new ConnectionManager(
                 "root",
@@ -247,7 +255,7 @@ public class StudentsDao {
     /**
      * Delete a student from database.
      * @param student
-     * @return true if delete succefully. Otherwise throws exception.
+     * @return true if delete successfully. Otherwise throws exception.
      * @throws SQLException
      */
     public boolean deleteStudent(Students student) throws SQLException {
@@ -340,7 +348,147 @@ public class StudentsDao {
         return students;
     }
 
-//    public List<Students> getSimilarStudents() throws SQLException {
-//
-//    }
+    /**
+     * This function is to check if given neu id is already existed in database.
+     *
+     * @param neuId
+     * @return true if neuId is existed in database. Otherwise, return false.
+     * @throws SQLException
+     */
+    public boolean isExisted(String neuId) throws SQLException {
+        String getSingleStudent =
+                "SELECT * FROM Students WHERE NeuId = ?";
+        Connection connection = null;
+        PreparedStatement selectStmt = null;
+        ResultSet results = null;
+        try {
+            connectionManager.connect();
+            connection = connectionManager.getConnection();
+            selectStmt = connection.prepareStatement(getSingleStudent);
+            selectStmt.setString(1, neuId);
+
+            results = selectStmt.executeQuery();
+
+            if(results.next()) return true;
+            else return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(selectStmt != null) {
+                selectStmt.close();
+            }
+            if(results != null) {
+                results.close();
+            }
+        }
+    }
+
+    /**
+     * Update the address information of a specific student.
+     *
+     * @param student
+     * @return true if update successfully. Otherwise, return false.
+     * @throws SQLException
+     */
+    public boolean updateStudentAddress(Students student) throws SQLException {
+        String getSingleStudent =
+                "UPDATE Students SET Address = ? WHERE NeuId = ?";
+        Connection connection = null;
+        PreparedStatement updateStmt = null;
+        ResultSet results = null;
+        try {
+            connectionManager.connect();
+            connection = connectionManager.getConnection();
+            updateStmt = connection.prepareStatement(getSingleStudent);
+            updateStmt.setString(1, student.getAddress());
+            updateStmt.setString(2, student.getNeuId());
+
+            results = updateStmt.executeQuery();
+
+            if(results.next()) return true;
+            else return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(updateStmt != null) {
+                updateStmt.close();
+            }
+            if(results != null) {
+                results.close();
+            }
+        }
+    }
+
+    /**
+     * This function is to search similar students based on some information.
+     *
+     * @param degree
+     * @return A list of similar students.
+     * @throws SQLException
+     */
+    public List<Students> searchSimilarStudents(DegreeCandidacy degree) throws SQLException {
+        List<Students> students = new ArrayList<>();
+        String searchStudent =
+                "SELECT * FROM Students WHERE DegreeCandidacy = ?;";
+
+        Connection connection = null;
+        PreparedStatement selectStmt = null;
+        ResultSet results = null;
+        try {
+            connectionManager.connect();
+            connection = connectionManager.getConnection();
+            selectStmt = connection.prepareStatement(searchStudent);
+            selectStmt.setString(1, degree.name());
+
+            results = selectStmt.executeQuery();
+
+            while(results.next()) {
+                String neuId = results.getString("NeuId");
+                String email = results.getString("Email");
+                String firstName = results.getString("FirstName");
+                String middleName = results.getString("MiddleName");
+                String lastName = results.getString("LastName");
+                Gender gender = Gender.valueOf(results.getString("Gender"));
+                boolean scholarship = results.getBoolean("Scholarship");
+                boolean f1Visa = results.getBoolean("F1Visa");
+                int age = results.getInt("Age");
+                String phoneNum = results.getString("Phone");
+                String address = results.getString("Address");
+                String state = results.getString("State");
+                String zip = results.getString("Zip");
+                EnrollmentStatus enrollmentStatus = EnrollmentStatus.valueOf(
+                        results.getString("EnrollmentStatus"));
+                Campus campus = Campus.valueOf(results.getString("Campus"));
+                Blob photo = results.getBlob("Photo");
+
+                Students student = new Students(neuId, email, firstName, middleName, lastName, gender, scholarship,
+                        f1Visa, age, phoneNum, address, state, zip, enrollmentStatus, campus, degree, photo);
+
+                students.add(student);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(selectStmt != null) {
+                selectStmt.close();
+            }
+            if(results != null) {
+                results.close();
+            }
+        }
+
+        return students;
+    }
 }

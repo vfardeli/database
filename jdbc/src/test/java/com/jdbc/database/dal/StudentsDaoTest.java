@@ -60,18 +60,50 @@ public class StudentsDaoTest {
 
         Students student = studentdao.searchStudentById("0000000");
         Assert.assertTrue(student.getFirstName().equals("Tom"));
+
+        studentdao.deleteStudent(newStudent);
     }
 
     @Test
     public void deleteStudentTest() throws Exception {
-        Students student = new Students("0000000", "tomcat@gmail.com", "Tom", "",
+        Students newStudent = new Students("0000000", "tomcat@gmail.com", "Tom", "",
                 "Cat", Gender.M, true, true, 22, "1111111111",
                 "401 Terry Ave", "WA", "98109", EnrollmentStatus.FULL_TIME, Campus.SEATTLE,
                 DegreeCandidacy.MASTERS, null);
 
-        boolean delete = studentdao.deleteStudent(student);
+        studentdao.addStudent(newStudent);
+        boolean delete = studentdao.deleteStudent(newStudent);
         Assert.assertTrue(delete);
-        student = studentdao.searchStudentById("0000000");
-        Assert.assertTrue(student==null);
+        newStudent = studentdao.searchStudentById("0000000");
+        Assert.assertTrue(newStudent==null);
+    }
+
+    @Test
+    public void searchStudentByFirstNameTest() throws Exception {
+        List<Students> student = studentdao.searchStudentByFirstName("James");
+        Assert.assertTrue(student.size() == 1);
+        Assert.assertTrue(student.get(0).getNeuId().equals("111234544"));
+    }
+
+    @Test
+    public void updateStudentAddressTest() throws Exception {
+        Students newStudent = new Students("000000", "tomcat@gmail.com", "Tom", "",
+                "Cat", Gender.M, true, true, 22, "1111111111",
+                "401 Terry Ave", "WA", "98109", EnrollmentStatus.FULL_TIME, Campus.SEATTLE,
+                DegreeCandidacy.MASTERS, null);
+
+        studentdao.addStudent(newStudent);
+
+        newStudent.setAddress("402 Terry Ave");
+        studentdao.updateStudentAddress(newStudent);
+
+        Assert.assertTrue(studentdao.searchStudentById("000000").getAddress().equals("402 Terry Ave"));
+        studentdao.deleteStudent(newStudent);
+    }
+
+    @Test
+    public void searchSimilarStudents() throws Exception {
+        List<Students> students = studentdao.searchSimilarStudents(DegreeCandidacy.MASTERS);
+        Assert.assertTrue(students.size() == 6);
     }
 }

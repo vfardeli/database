@@ -37,12 +37,14 @@ public class TotalStudentsInSeattleDaoTest {
 
     @Test
     public void updateTotalStudentsInSeattleInPublicDatabase() throws Exception {
+        int totalStudentsInSeattle = totalStudentsInSeattleDao.getTotalStudentsInSeattleFromPublicDatabase();
+
         totalStudentsInSeattleDao.updateTotalStudentsInSeattleInPublicDatabase(
                 TOTAL_STUDENTS_IN_SEATTLE_TEST);
         Assert.assertTrue(totalStudentsInSeattleDao.getTotalStudentsInSeattleFromPublicDatabase()
                 == TOTAL_STUDENTS_IN_SEATTLE_TEST);
 
         totalStudentsInSeattleDao.updateTotalStudentsInSeattleInPublicDatabase(
-                totalStudentsInSeattleDao.getTotalStudentsInSeattleFromPrivateDatabase());
+                totalStudentsInSeattle);
     }
 }

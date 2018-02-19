@@ -30,9 +30,9 @@ public class TotalStudentsInAmazonDao {
      * from private database.
      *
      * @return Total number of students who worked in Amazon
-     * @throws Exception
+     * @throws SQLException when connection to the DB has something wrong
      */
-    public int getTotalStudentsFromPrivateDB() throws Exception {
+    public int getTotalStudentsFromPrivateDB() throws SQLException {
         String query = "SELECT COUNT(*) AS TOTAL_AMAZON_STUDENT FROM ( " +
                 "SELECT S.NeuId, COUNT(*) " +
                 "FROM AlignPrivate.Students AS S " +
@@ -51,9 +51,9 @@ public class TotalStudentsInAmazonDao {
      * Update the number of students who worked in Amazon in public database.
      *
      * @param totalStudentsInAmazon
-     * @throws Exception
+     * @throws SQLException when connection to the DB has something wrong
      */
-    public void updateTotalStudentsInAmazon(int totalStudentsInAmazon) throws Exception {
+    public void updateTotalStudentsInAmazon(int totalStudentsInAmazon) throws SQLException {
         String updateStudentsInAmazon =
                 "UPDATE SingleValueAggregatedData SET DataValue = ? WHERE " +
                         "DataKey = \"TotalStudentsWhoWorkInAmazon\";";
@@ -65,13 +65,13 @@ public class TotalStudentsInAmazonDao {
      * Get the number of students who worked in Amazon from public database.
      *
      * @return the number of students who worked in Amazon.
-     * @throws Exception
+     * @throws SQLException when connection to the DB has something wrong
      */
-    public int getTotalStudentsInAmazon() throws Exception {
-        String updateStudentsInAmazon =
+    public int getTotalStudentsInAmazon() throws SQLException {
+        String getStudentsInAmazon =
                 "SELECT DataValue FROM SingleValueAggregatedData " +
                         "WHERE DataKey = \"TotalStudentsWhoWorkInAmazon\";";
         PublicDatabaseEtlQuery publicPublicDatabaseEtlQuery = new PublicDatabaseEtlQuery();
-        return publicPublicDatabaseEtlQuery.getSingleValueQuery(updateStudentsInAmazon);
+        return publicPublicDatabaseEtlQuery.getSingleValueQuery(getStudentsInAmazon);
     }
 }

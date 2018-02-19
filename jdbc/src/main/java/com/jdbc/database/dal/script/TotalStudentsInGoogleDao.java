@@ -30,9 +30,9 @@ public class TotalStudentsInGoogleDao {
      * from private database.
      *
      * @return Total number of students who worked in Google
-     * @throws Exception
+     * @throws SQLException when connection to the DB has something wrong
      */
-    public int getTotalStudentsFromPrivateDB() throws Exception {
+    public int getTotalStudentsFromPrivateDB() throws SQLException {
         String query = "SELECT COUNT(*) AS TOTAL_GOOGLE_STUDENT FROM ( " +
                 "SELECT S.NeuId, COUNT(*) " +
                 "FROM AlignPrivate.Students AS S " +
@@ -51,9 +51,9 @@ public class TotalStudentsInGoogleDao {
      * Update the number of students who worked in Google in public database.
      *
      * @param totalStudentsInGoogle
-     * @throws Exception
+     * @throws SQLException when connection to the DB has something wrong
      */
-    public void updateTotalStudentsInGoogle(int totalStudentsInGoogle) throws Exception {
+    public void updateTotalStudentsInGoogle(int totalStudentsInGoogle) throws SQLException {
         String updateStudentsInGoogle =
                 "UPDATE SingleValueAggregatedData SET DataValue = ? WHERE " +
                         "DataKey = \"TotalStudentsWhoWorkInGoogle\";";
@@ -65,13 +65,13 @@ public class TotalStudentsInGoogleDao {
      * Get the number of students who worked in Google from public database.
      *
      * @return the number of students who worked in Google.
-     * @throws Exception
+     * @throws SQLException when connection to the DB has something wrong
      */
-    public int getTotalStudentsInGoogle() throws Exception {
-        String updateStudentsInGoogle =
+    public int getTotalStudentsInGoogle() throws SQLException {
+        String getStudentsInGoogle =
                 "SELECT DataValue FROM SingleValueAggregatedData " +
                         "WHERE DataKey = \"TotalStudentsWhoWorkInGoogle\";";
         PublicDatabaseEtlQuery publicPublicDatabaseEtlQuery = new PublicDatabaseEtlQuery();
-        return publicPublicDatabaseEtlQuery.getSingleValueQuery(updateStudentsInGoogle);
+        return publicPublicDatabaseEtlQuery.getSingleValueQuery(getStudentsInGoogle);
     }
 }

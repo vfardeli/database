@@ -30,9 +30,9 @@ public class TotalStudentsInFacebookDao {
      * from private database.
      *
      * @return Total number of students who worked in Facebook
-     * @throws Exception
+     * @throws SQLException when connection to the DB has something wrong
      */
-    public int getTotalStudentsFromPrivateDB() throws Exception {
+    public int getTotalStudentsFromPrivateDB() throws SQLException {
         String query = "SELECT COUNT(*) AS TOTAL_FACEBOOK_STUDENT FROM ( " +
                 "SELECT S.NeuId, COUNT(*) " +
                 "FROM AlignPrivate.Students AS S " +
@@ -51,9 +51,9 @@ public class TotalStudentsInFacebookDao {
      * Update the number of students who worked in Facebook in public database.
      *
      * @param totalStudentsInFacebook
-     * @throws Exception
+     * @throws SQLException when connection to the DB has something wrong
      */
-    public void updateTotalStudentsInFacebook(int totalStudentsInFacebook) throws Exception {
+    public void updateTotalStudentsInFacebook(int totalStudentsInFacebook) throws SQLException {
         String updateStudentsInFacebook =
                 "UPDATE SingleValueAggregatedData SET DataValue = ? WHERE " +
                         "DataKey = \"TotalStudentsWhoWorkInFacebook\";";
@@ -65,13 +65,13 @@ public class TotalStudentsInFacebookDao {
      * Get the number of students who worked in Facebook from public database.
      *
      * @return the number of students who worked in Facebook.
-     * @throws Exception
+     * @throws SQLException when connection to the DB has something wrong
      */
-    public int getTotalStudentsInFacebook() throws Exception {
-        String updateStudentsInFacebook =
+    public int getTotalStudentsInFacebook() throws SQLException {
+        String getStudentsInFacebook =
                 "SELECT DataValue FROM SingleValueAggregatedData " +
                         "WHERE DataKey = \"TotalStudentsWhoWorkInFacebook\";";
         PublicDatabaseEtlQuery publicPublicDatabaseEtlQuery = new PublicDatabaseEtlQuery();
-        return publicPublicDatabaseEtlQuery.getSingleValueQuery(updateStudentsInFacebook);
+        return publicPublicDatabaseEtlQuery.getSingleValueQuery(getStudentsInFacebook);
     }
 }

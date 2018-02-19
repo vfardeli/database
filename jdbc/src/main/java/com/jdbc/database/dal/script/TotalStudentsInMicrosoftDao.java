@@ -30,9 +30,9 @@ public class TotalStudentsInMicrosoftDao {
      * from private database.
      *
      * @return Total number of students who worked in Microsoft
-     * @throws Exception
+     * @throws SQLException when connection to the DB has something wrong
      */
-    public int getTotalStudentsFromPrivateDB() throws Exception {
+    public int getTotalStudentsFromPrivateDB() throws SQLException {
         String query = "SELECT COUNT(*) AS TOTAL_MICROSOFT_STUDENT FROM ( " +
                 "SELECT S.NeuId, COUNT(*) " +
                 "FROM AlignPrivate.Students AS S " +
@@ -51,9 +51,9 @@ public class TotalStudentsInMicrosoftDao {
      * Update the number of students who worked in Microsoft in public database.
      *
      * @param totalStudentsInMicrosoft
-     * @throws Exception
+     * @throws SQLException when connection to the DB has something wrong
      */
-    public void updateTotalStudentsInMicrosoft(int totalStudentsInMicrosoft) throws Exception {
+    public void updateTotalStudentsInMicrosoft(int totalStudentsInMicrosoft) throws SQLException {
         String updateStudentsInMicrosoft =
                 "UPDATE SingleValueAggregatedData SET DataValue = ? WHERE " +
                         "DataKey = \"TotalStudentsWhoWorkInMicrosoft\";";
@@ -65,13 +65,13 @@ public class TotalStudentsInMicrosoftDao {
      * Get the number of students who worked in Microsoft from public database.
      *
      * @return the number of students who worked in Microsoft.
-     * @throws Exception
+     * @throws SQLException when connection to the DB has something wrong
      */
-    public int getTotalStudentsInMicrosoft() throws Exception {
-        String updateStudentsInMicrosoft =
+    public int getTotalStudentsInMicrosoft() throws SQLException {
+        String getStudentsInMicrosoft =
                 "SELECT DataValue FROM SingleValueAggregatedData " +
                         "WHERE DataKey = \"TotalStudentsWhoWorkInMicrosoft\";";
         PublicDatabaseEtlQuery publicPublicDatabaseEtlQuery = new PublicDatabaseEtlQuery();
-        return publicPublicDatabaseEtlQuery.getSingleValueQuery(updateStudentsInMicrosoft);
+        return publicPublicDatabaseEtlQuery.getSingleValueQuery(getStudentsInMicrosoft);
     }
 }

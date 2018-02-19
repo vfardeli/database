@@ -15,13 +15,12 @@ public class StudentsDaoTest {
     public static final int COUNT_OF_MALE = 5;
     private static final int COUNT_OF_FEMALE = 5;
 
-    StudentsDao studentdao;
+    private StudentsDao studentdao;
 
     @Before
     public void init() throws SQLException {
         studentdao = studentdao.getInstance();
     }
-
 
     @Test
     public void getMaleStudentCountTest() throws Exception {
@@ -50,6 +49,9 @@ public class StudentsDaoTest {
 
     @Test
     public void addStudentTest() throws Exception {
+        Students student = studentdao.searchStudentById("0000000");
+        Assert.assertTrue(student == null);
+
         Students newStudent = new Students("0000000", "tomcat@gmail.com", "Tom", "",
                 "Cat", Gender.M, true, true, 22, "1111111111",
                 "401 Terry Ave", "WA", "98109", EnrollmentStatus.FULL_TIME, Campus.SEATTLE,
@@ -58,7 +60,7 @@ public class StudentsDaoTest {
         boolean insert = studentdao.addStudent(newStudent);
         Assert.assertTrue(insert);
 
-        Students student = studentdao.searchStudentById("0000000");
+        student = studentdao.searchStudentById("0000000");
         Assert.assertTrue(student.getFirstName().equals("Tom"));
 
         studentdao.deleteStudent(newStudent);
@@ -80,9 +82,10 @@ public class StudentsDaoTest {
 
     @Test
     public void searchStudentByFirstNameTest() throws Exception {
-        List<Students> student = studentdao.searchStudentByFirstName("James");
-        Assert.assertTrue(student.size() == 1);
-        Assert.assertTrue(student.get(0).getNeuId().equals("111234544"));
+        List<Students> students = studentdao.searchStudentByFirstName("James");
+        for (Students student : students) {
+            Assert.assertTrue(student.getFirstName().equals("James"));
+        }
     }
 
     @Test
@@ -104,6 +107,8 @@ public class StudentsDaoTest {
     @Test
     public void searchSimilarStudents() throws Exception {
         List<Students> students = studentdao.searchSimilarStudents(DegreeCandidacy.MASTERS);
-        Assert.assertTrue(students.size() == 6);
+        for (Students student : students) {
+            Assert.assertTrue(student.getDegree().name().equals("MASTERS"));
+        }
     }
 }

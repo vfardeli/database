@@ -43,7 +43,7 @@ public class StudentsDao {
      * Get total number of male students.
      * This is a function to extract the total number of male students.
      *
-     * @return Total Number of Male Students
+     * @return Total Number of Male Students.
      * @throws SQLException
      */
     public int getMaleStudentCount() throws SQLException {
@@ -51,17 +51,39 @@ public class StudentsDao {
                 "SELECT COUNT(*) AS COUNT_OF_MALE " +
                         "FROM Students " +
                         "WHERE Gender = \"M\";";
-        PrivateDatabaseEtlQuery privateDatabaseEtlQuery = new PrivateDatabaseEtlQuery();
-        return privateDatabaseEtlQuery.getSingleValueQuery(
-                getTotalMaleStudents,
-                "COUNT_OF_MALE");
+
+        Connection connection = null;
+        PreparedStatement selectStmt = null;
+        ResultSet results = null;
+        try {
+            connectionManager.connect();
+            connection = connectionManager.getConnection();
+            selectStmt = connection.prepareStatement(getTotalMaleStudents);
+            results = selectStmt.executeQuery();
+
+            if (results.next()) {
+                return results.getInt("COUNT_OF_MALE");
+            } else {
+                return 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(selectStmt != null) {
+                selectStmt.close();
+            }
+        }
     }
 
     /**
      * Get total number of female students.
      * This is a function to extract the total number of male students.
      *
-     * @return Total Number of Female Students
+     * @return Total Number of Female Students.
      * @throws SQLException
      */
     public int getFemaleStudentCount() throws SQLException {
@@ -69,10 +91,32 @@ public class StudentsDao {
                 "SELECT COUNT(*) AS COUNT_OF_FEMALE " +
                         "FROM Students " +
                         "WHERE Gender = \"F\";";
-        PrivateDatabaseEtlQuery privateDatabaseEtlQuery = new PrivateDatabaseEtlQuery();
-        return privateDatabaseEtlQuery.getSingleValueQuery(
-                getTotalFemaleStudents,
-                "COUNT_OF_FEMALE");
+
+        Connection connection = null;
+        PreparedStatement selectStmt = null;
+        ResultSet results = null;
+        try {
+            connectionManager.connect();
+            connection = connectionManager.getConnection();
+            selectStmt = connection.prepareStatement(getTotalFemaleStudents);
+            results = selectStmt.executeQuery();
+
+            if (results.next()) {
+                return results.getInt("COUNT_OF_FEMALE");
+            } else {
+                return 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(selectStmt != null) {
+                selectStmt.close();
+            }
+        }
     }
 
     /**
@@ -83,8 +127,7 @@ public class StudentsDao {
      * @throws SQLException
      */
     public Students searchStudentById(String neuId) throws SQLException {
-        String getSingleStudent =
-                "SELECT * FROM Students WHERE NeuId = ?";
+        String getSingleStudent = "SELECT * FROM Students WHERE NeuId = ?;";
         Connection connection = null;
         PreparedStatement selectStmt = null;
         ResultSet results = null;
@@ -145,8 +188,7 @@ public class StudentsDao {
      */
     public List<Students> getAllStudents() throws SQLException {
         List<Students> students = new ArrayList<>();
-        String getAllStudent =
-                "SELECT * FROM Students;";
+        String getAllStudent = "SELECT * FROM Students;";
 
         Connection connection = null;
         PreparedStatement selectStmt = null;
@@ -292,8 +334,7 @@ public class StudentsDao {
      */
     public List<Students> searchStudentByFirstName(String firstName) throws Exception {
         List<Students> students = new ArrayList<>();
-        String searchStudent =
-                "SELECT * FROM Students WHERE FirstName = ?;";
+        String searchStudent = "SELECT * FROM Students WHERE FirstName = ?;";
 
         Connection connection = null;
         PreparedStatement selectStmt = null;
@@ -356,8 +397,7 @@ public class StudentsDao {
      * @throws SQLException
      */
     public boolean isExisted(String neuId) throws SQLException {
-        String getSingleStudent =
-                "SELECT * FROM Students WHERE NeuId = ?";
+        String getSingleStudent = "SELECT * FROM Students WHERE NeuId = ?";
         Connection connection = null;
         PreparedStatement selectStmt = null;
         ResultSet results = null;
@@ -395,8 +435,7 @@ public class StudentsDao {
      * @throws SQLException
      */
     public boolean updateStudentAddress(Students student) throws SQLException {
-        String getSingleStudent =
-                "UPDATE Students SET Address = ? WHERE NeuId = ?";
+        String getSingleStudent = "UPDATE Students SET Address = ? WHERE NeuId = ?";
         Connection connection = null;
         PreparedStatement updateStmt = null;
         ResultSet results = null;
@@ -436,8 +475,7 @@ public class StudentsDao {
      */
     public List<Students> searchSimilarStudents(DegreeCandidacy degree) throws SQLException {
         List<Students> students = new ArrayList<>();
-        String searchStudent =
-                "SELECT * FROM Students WHERE DegreeCandidacy = ?;";
+        String searchStudent = "SELECT * FROM Students WHERE DegreeCandidacy = ?;";
 
         Connection connection = null;
         PreparedStatement selectStmt = null;

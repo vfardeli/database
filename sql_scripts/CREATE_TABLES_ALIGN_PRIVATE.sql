@@ -22,6 +22,7 @@ DROP TABLE IF EXISTS Students;
 
 CREATE TABLE Students (
 	NeuId VARCHAR(16) NOT NULL,
+    Password VARCHAR(50) NOT NULL,
     Email VARCHAR(255) NOT NULL,
     FirstName VARCHAR(25) NOT NULL,
     MiddleName VARCHAR(25),

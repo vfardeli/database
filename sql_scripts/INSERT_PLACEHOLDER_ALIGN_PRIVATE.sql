@@ -2,91 +2,91 @@ USE AlignPrivate;
 
 # Insert Students Table
 INSERT INTO Students (
-	NeuId, Email, FirstName, LastName, Gender, F1Visa, Age, Phone, Address, State, Zip,
+    NeuId, Password, Email, FirstName, LastName, Gender, F1Visa, Age, Phone, Address, State, Zip,
     EnrollmentStatus, Campus, DegreeCandidacy, Photo)
     VALUES (
-    001234567, "kwan.d@husky.neu.edu", "Daniel", "Kwan", 'M', TRUE, 25, "2061111111",
+    001234567, "abcd", "kwan.d@husky.neu.edu", "Daniel", "Kwan", 'M', TRUE, 25, "2061111111",
     "123 Meridian Ave N Apt 123", "WA", "98125", "FULL_TIME", "SEATTLE", "MASTERS", 
     "https://lh3.googleusercontent.com/dij0oU7JFwwSMQAgR3wpQHerTMG1mECpm6BdUYKSyCalYZM3dbMgNrHgJ-krY_i7hwIJ=w300"
 );
     
 INSERT INTO Students (
-	NeuId, Email, FirstName, LastName, Gender, F1Visa, Age, Phone, Address, State, Zip,
+    NeuId, Password, Email, FirstName, LastName, Gender, F1Visa, Age, Phone, Address, State, Zip,
     EnrollmentStatus, Campus, DegreeCandidacy, Photo)
     VALUES (
-    001234543, "doe.j@husky.neu.edu", "John", "Doe", 'M', TRUE, 22, "2062222222",
+    001234543, "abcd", "doe.j@husky.neu.edu", "John", "Doe", 'M', TRUE, 22, "2062222222",
     "321 Meridian Ave N Apt 333", "WA", "98125", "FULL_TIME", "SEATTLE", "PHD", 
     "https://lh3.googleusercontent.com/dij0oU7JFwwSMQAgR3wpQHerTMG1mECpm6BdUYKSyCalYZM3dbMgNrHgJ-krY_i7hwIJ=w300"
 );
 
 INSERT INTO Students (
-	NeuId, Email, FirstName, LastName, Gender, F1Visa, Age, Phone, Address, State, Zip,
+    NeuId, Password, Email, FirstName, LastName, Gender, F1Visa, Age, Phone, Address, State, Zip,
     EnrollmentStatus, Campus, DegreeCandidacy, Photo)
     VALUES (
-    111234544, "marks.j@husky.neu.edu", "James", "Marks", 'M', FALSE, 23, "2062223333",
+    111234544, "abcd", "marks.j@husky.neu.edu", "James", "Marks", 'M', FALSE, 23, "2062223333",
     "321 Flying Ave N Apt 333", "MA", "98404", "PART_TIME", "BOSTON", "MASTERS", 
     "https://lh3.googleusercontent.com/dij0oU7JFwwSMQAgR3wpQHerTMG1mECpm6BdUYKSyCalYZM3dbMgNrHgJ-krY_i7hwIJ=w300"
 );
 
 INSERT INTO Students (
-	NeuId, Email, FirstName, LastName, Gender, F1Visa, Age, Phone, Address, State, Zip,
+    NeuId, Password, Email, FirstName, LastName, Gender, F1Visa, Age, Phone, Address, State, Zip,
     EnrollmentStatus, Campus, DegreeCandidacy, Photo)
     VALUES (
-    111234545, "ashley.fields@husky.neu.edu", "Ashley", "Fields", 'F', TRUE, 23, "2062223334",
+    111234545, "abcd", "ashley.fields@husky.neu.edu", "Ashley", "Fields", 'F', TRUE, 23, "2062223334",
     "333 Coastal Ave N Apt 111", "NC", "98321", "FULL_TIME", "CHARLOTTE", "PHD", 
     "https://lh3.googleusercontent.com/dij0oU7JFwwSMQAgR3wpQHerTMG1mECpm6BdUYKSyCalYZM3dbMgNrHgJ-krY_i7hwIJ=w300"
 );
 
 INSERT INTO Students (
-	NeuId, Email, FirstName, LastName, Gender, F1Visa, Age, Phone, Address, State, Zip,
+    NeuId, Password, Email, FirstName, LastName, Gender, F1Visa, Age, Phone, Address, State, Zip,
     EnrollmentStatus, Campus, DegreeCandidacy, Photo)
     VALUES (
-    111234546, "huang.c@husky.neu.edu", "Christie", "Huang", 'F', FALSE, 23, "2062223344",
+    111234546, "abcd", "huang.c@husky.neu.edu", "Christie", "Huang", 'F', FALSE, 23, "2062223344",
     "321 Mango Ave N Apt 333", "CA", "98401", "PART_TIME", "SILICON_VALLEY", "MASTERS", 
     "https://lh3.googleusercontent.com/dij0oU7JFwwSMQAgR3wpQHerTMG1mECpm6BdUYKSyCalYZM3dbMgNrHgJ-krY_i7hwIJ=w300"
 );
 
 INSERT INTO Students (
-	NeuId, Email, FirstName, LastName, Gender, F1Visa, Age, Phone, Address, State, Zip,
+    NeuId, Password, Email, FirstName, LastName, Gender, F1Visa, Age, Phone, Address, State, Zip,
     EnrollmentStatus, Campus, DegreeCandidacy, Photo)
     VALUES (
-    111234547, "cotton.t@husky.neu.edu", "Tony", "Cotton", 'M', FALSE, 23, "2062223335",
+    111234547, "abcd", "cotton.t@husky.neu.edu", "Tony", "Cotton", 'M', FALSE, 23, "2062223335",
     "322 Flying Ave N Apt 223", "WA", "98105", "FULL_TIME", "SEATTLE", "PHD", 
     "https://lh3.googleusercontent.com/dij0oU7JFwwSMQAgR3wpQHerTMG1mECpm6BdUYKSyCalYZM3dbMgNrHgJ-krY_i7hwIJ=w300"
 );
 
 INSERT INTO Students (
-	NeuId, Email, FirstName, LastName, Gender, F1Visa, Age, Phone, Address, State, Zip,
+    NeuId, Password, Email, FirstName, LastName, Gender, F1Visa, Age, Phone, Address, State, Zip,
     EnrollmentStatus, Campus, DegreeCandidacy, Photo)
     VALUES (
-    211234548, "rachel.j@husky.neu.edu", "Rachel", "Joanne", 'F', FALSE, 26, "2062223336",
+    211234548, "abcd", "rachel.j@husky.neu.edu", "Rachel", "Joanne", 'F', FALSE, 26, "2062223336",
     "321 Mango Ave N Apt 333", "CA", "98401", "PART_TIME", "SILICON_VALLEY", "MASTERS", 
     "https://lh3.googleusercontent.com/dij0oU7JFwwSMQAgR3wpQHerTMG1mECpm6BdUYKSyCalYZM3dbMgNrHgJ-krY_i7hwIJ=w300"
 );
 
 INSERT INTO Students (
-	NeuId, Email, FirstName, LastName, Gender, F1Visa, Age, Phone, Address, State, Zip,
+    NeuId, Password, Email, FirstName, LastName, Gender, F1Visa, Age, Phone, Address, State, Zip,
     EnrollmentStatus, Campus, DegreeCandidacy, Photo)
     VALUES (
-    211234549, "ferguson.c@husky.neu.edu", "Charles", "Ferguson", 'M', FALSE, 26, "2062223386",
+    211234549, "abcd", "ferguson.c@husky.neu.edu", "Charles", "Ferguson", 'M', FALSE, 26, "2062223386",
     "321 Coastal Ave N", "NC", "98331", "FULL_TIME", "CHARLOTTE", "PHD", 
     "https://lh3.googleusercontent.com/dij0oU7JFwwSMQAgR3wpQHerTMG1mECpm6BdUYKSyCalYZM3dbMgNrHgJ-krY_i7hwIJ=w300"
 );
 
 INSERT INTO Students (
-	NeuId, Email, FirstName, LastName, Gender, F1Visa, Age, Phone, Address, State, Zip,
+    NeuId, Password, Email, FirstName, LastName, Gender, F1Visa, Age, Phone, Address, State, Zip,
     EnrollmentStatus, Campus, DegreeCandidacy, Photo)
     VALUES (
-    211232248, "sarahcoast@husky.neu.edu", "Sarah", "Coast", 'F', TRUE, 26, "2062223436",
+    211232248, "abcd", "sarahcoast@husky.neu.edu", "Sarah", "Coast", 'F', TRUE, 26, "2062223436",
     "321 Mango Ave N Apt 323", "CA", "98401", "PART_TIME", "SILICON_VALLEY", "MASTERS", 
     "https://lh3.googleusercontent.com/dij0oU7JFwwSMQAgR3wpQHerTMG1mECpm6BdUYKSyCalYZM3dbMgNrHgJ-krY_i7hwIJ=w300"
 );
 
 INSERT INTO Students (
-	NeuId, Email, FirstName, LastName, Gender, F1Visa, Age, Phone, Address, State, Zip,
+    NeuId, Password, Email, FirstName, LastName, Gender, F1Visa, Age, Phone, Address, State, Zip,
     EnrollmentStatus, Campus, DegreeCandidacy, Photo)
     VALUES (
-    211234550, "alvin.straws@husky.neu.edu", "Alvin", "Straws", 'F', FALSE, 26, "2062223356",
+    211234550, "abcd", "alvin.straws@husky.neu.edu", "Alvin", "Straws", 'F', FALSE, 26, "2062223356",
     "321 Sturgus Ave N Apt 333", "WA", "98321", "PART_TIME", "SEATTLE", "MASTERS", 
     "https://lh3.googleusercontent.com/dij0oU7JFwwSMQAgR3wpQHerTMG1mECpm6BdUYKSyCalYZM3dbMgNrHgJ-krY_i7hwIJ=w300"
 );

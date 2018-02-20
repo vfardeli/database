@@ -4,6 +4,7 @@ import java.sql.Blob;
 
 public class Students {
     private String neuId;
+    private String password;
     private String email;
     private String firstName;
     private String middleName;
@@ -21,10 +22,11 @@ public class Students {
     private DegreeCandidacy degree;
     private Blob photo;
 
-    public Students(String neuId, String email, String firstName, String middleName, String lastName, Gender gender,
+    public Students(String neuId, String password, String email, String firstName, String middleName, String lastName, Gender gender,
                     boolean scholarship, boolean f1Visa, int age, String phoneNum, String address, String state,
                     String zip, EnrollmentStatus enrollmentStatus, Campus campus, DegreeCandidacy degree, Blob photo) {
         this.neuId = neuId;
+        this.password = password;
         this.email = email;
         this.firstName = firstName;
         this.middleName = middleName;
@@ -43,12 +45,24 @@ public class Students {
         this.photo = photo;
     }
 
+    public Students() {
+        super();
+    }
+
     public String getNeuId() {
         return neuId;
     }
 
     public void setNeuId(String neuId) {
         this.neuId = neuId;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getEmail() {
@@ -177,5 +191,29 @@ public class Students {
 
     public void setPhoto(Blob photo) {
         this.photo = photo;
+    }
+
+    @Override
+    public String toString() {
+        return "Students{" +
+                "neuId='" + neuId + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", middleName='" + middleName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", gender=" + gender +
+                ", scholarship=" + scholarship +
+                ", f1Visa=" + f1Visa +
+                ", age=" + age +
+                ", phoneNum='" + phoneNum + '\'' +
+                ", address='" + address + '\'' +
+                ", state='" + state + '\'' +
+                ", zip='" + zip + '\'' +
+                ", enrollmentStatus=" + enrollmentStatus +
+                ", campus=" + campus +
+                ", degree=" + degree +
+                ", photo=" + photo +
+                '}';
     }
 }

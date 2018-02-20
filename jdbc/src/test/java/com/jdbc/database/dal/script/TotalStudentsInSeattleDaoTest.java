@@ -17,20 +17,20 @@ public class TotalStudentsInSeattleDaoTest {
     @Before
     public void init() throws Exception {
         totalStudentsInSeattleDao = TotalStudentsInSeattleDao.getInstance();
-        studentsDao = studentsDao.getInstance();
+        studentsDao = new StudentsDao();
     }
 
     @Test
     public void getTotalStudentsInSeattleFromPrivateDatabaseTest() throws Exception {
         int totalStudentInSeattle = totalStudentsInSeattleDao.getTotalStudentsInSeattleFromPrivateDatabase();
-        Students newStudent = new Students("0000000", "tomcat@gmail.com", "Tom", "",
+        Students newStudent = new Students("0000000", "password" ,"tomcat@gmail.com", "Tom", "",
                 "Cat", Gender.M, true, true, 22, "1111111111",
                 "401 Terry Ave", "WA", "98109", EnrollmentStatus.FULL_TIME, Campus.SEATTLE,
                 DegreeCandidacy.MASTERS, null);
 
         studentsDao.addStudent(newStudent);
         int totalStudentInSeattle_incre = totalStudentsInSeattleDao.getTotalStudentsInSeattleFromPrivateDatabase();
-        studentsDao.deleteStudent(newStudent);
+        studentsDao.deleteStudent("0000000");
 
         Assert.assertTrue(totalStudentInSeattle == totalStudentInSeattle_incre - 1);
     }
